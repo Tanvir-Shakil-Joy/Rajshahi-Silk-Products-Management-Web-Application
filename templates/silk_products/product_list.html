@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Silk Products</h2>
+        <a href="{% url 'product_create' %}" class="btn">Add New Product</a>
+    </div>
+    
+    <form method="get" class="search-form">
+        <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Availability</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.get_type_display }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.availability|yesno:"In Stock,Out of Stock" }}</td>
+                <td class="action-links">
+                    <a href="{% url 'product_update' product.pk %}">Edit</a>
+                    <a href="{% url 'product_delete' product.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center;">No products found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
