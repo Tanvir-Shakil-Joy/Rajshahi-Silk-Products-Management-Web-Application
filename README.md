@@ -162,62 +162,7 @@ curl -X POST http://localhost:8000/api/products/ \
 
 ## Project Structure
 
-```
-silk_catalog/
-├── manage.py
-├── silk_catalog/
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── silk_products/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── models.py
-│   ├── views.py
-│   ├── forms.py
-│   └── urls.py
-├── templates/
-│   ├── base.html
-│   └── silk_products/
-│       ├── product_list.html
-│       ├── product_form.html
-│       └── product_confirm_delete.html
-└── static/
-    └── css/
-        └── style.css
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature/new-feature
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add new feature"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/new-feature
-   ```
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the `LICENSE` file for details.
-
-## Author
-
-**Tanvir Shakil Joy**
-
-## Acknowledgments
-
-- Django Documentation
-- Bootstrap for design inspiration
-
+``'
 Rajshahi-Silk-Products-Management-Web-Application/
 ├── manage.py
 ├── requirements.txt
