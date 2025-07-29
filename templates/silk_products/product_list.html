@@ -1,45 +1,54 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>Silk Products</h2>
-        <a href="{% url 'product_create' %}" class="btn">Add New Product</a>
-    </div>
-    
-    <form method="get" class="search-form">
-        <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
-        <button type="submit">Search</button>
-    </form>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Silk Products Marketplace</h2>
+    {% if user.is_authenticated and user.userprofile.role == 'seller' %}
+        <a href="{% url 'product_create' %}" class="btn btn-primary">Add New Product</a>
+    {% endif %}
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Price</th>
-                <th>Availability</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.get_type_display }}</td>
-                <td>${{ product.price }}</td>
-                <td>{{ product.availability|yesno:"In Stock,Out of Stock" }}</td>
-                <td class="action-links">
-                    <a href="{% url 'product_update' product.pk %}">Edit</a>
-                    <a href="{% url 'product_delete' product.pk %}">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5" style="text-align: center;">No products found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<form method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search products..." value="{{ query }}">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+</form>
+
+<div class="row">
+    {% for product in products %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">
+                        <strong>Type:</strong> {{ product.get_type_display }}<br>
+                        <strong>Price:</strong> ${{ product.price }}<br>
+                        <strong>Seller:</strong> {{ product.owner.get_full_name|default:product.owner.username }}<br>
+                        <strong>Available:</strong> 
+                        {% if product.availability %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-danger">No</span>
+                        {% endif %}
+                    </p>
+                    {% if product.description %}
+                        <p class="card-text"><small class="text-muted">{{ product.description|truncatewords:15 }}</small></p>
+                    {% endif %}
+                    <div class="mt-auto">
+                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-sm btn-info">View Details</a>
+                        {% if user.is_authenticated and product.owner == user %}
+                            <a href="{% url 'product_update' product.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{% url 'product_delete' product.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <p class="text-center">No products found.</p>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}

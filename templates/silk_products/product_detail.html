@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2>{{ product.name }}</h2>
+                <p><strong>Type:</strong> {{ product.get_type_display }}</p>
+                <p><strong>Price:</strong> ${{ product.price }}</p>
+                <p><strong>Seller:</strong> {{ product.owner.get_full_name|default:product.owner.username }}</p>
+                <p><strong>Email:</strong> {{ product.owner.email }}</p>
+                {% if product.owner.userprofile.phone %}
+                    <p><strong>Phone:</strong> {{ product.owner.userprofile.phone }}</p>
+                {% endif %}
+                <p><strong>Available:</strong> 
+                    {% if product.availability %}
+                        <span class="badge bg-success">Yes</span>
+                    {% else %}
+                        <span class="badge bg-danger">No</span>
+                    {% endif %}
+                </p>
+                {% if product.description %}
+                    <p><strong>Description:</strong></p>
+                    <p>{{ product.description|linebreaks }}</p>
+                {% endif %}
+                <p><small class="text-muted">Posted on {{ product.created_at|date:"F d, Y" }}</small></p>
+                
+                <div class="mt-3">
+                    <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to Products</a>
+                    {% if user.is_authenticated and product.owner == user %}
+                        <a href="{% url 'product_update' product.pk %}" class="btn btn-primary">Edit Product</a>
+                        <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Delete Product</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        {% if contact_form %}
+            <div class="card">
+                <div class="card-header">
+                    <h5>Contact Seller</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ contact_form.subject.id_for_label }}" class="form-label">Subject</label>
+                            {{ contact_form.subject }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ contact_form.message.id_for_label }}" class="form-label">Message</label>
+                            {{ contact_form.message }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        {% elif user.is_authenticated and user.userprofile.role == 'seller' and product.owner != user %}
+            <div class="alert alert-info">
+                <p>As a seller, you can view contact details above to reach out directly.</p>
+            </div>
+        {% elif not user.is_authenticated %}
+            <div class="alert alert-warning">
+                <p><a href="{% url 'login' %}">Login</a> as a buyer to contact this seller.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
