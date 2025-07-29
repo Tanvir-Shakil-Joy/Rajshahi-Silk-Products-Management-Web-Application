@@ -164,49 +164,51 @@ curl -X POST http://localhost:8000/api/products/ \
 
 ```
 Rajshahi-Silk-Products-Management-Web-Application/
-├── manage.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-├── db.sqlite3
-├── silk_catalog/                 # Main project directory
-│   ├── init .py
-│   ├── settings.py              # Django settings
-│   ├── urls.py                  # Main URL configuration
-│   ├── wsgi.py                  # WSGI configuration
-│   └── asgi.py                  # ASGI configuration
-├── silk_products/               # Main application
-│   ├── init .py
-│   ├── admin.py                 # Admin interface configuration
-│   ├── api_urls.py              # API URL patterns
-│   ├── api_views.py             # REST API views
-│   ├── apps.py                  # App configuration
-│   ├── forms.py                 # Django forms
-│   ├── models.py                # Database models
-│   ├── serializers.py           # DRF serializers
-│   ├── tests.py                 # Test cases
-│   ├── urls.py                  # Web URL patterns
-│   ├── views.py                 # Web views
-│   ├── migrations/              # Database migrations
-│   │   ├── 0001_initial.py
-│   │   ├── 0002_alter_silkproduct_name_alter_silkproduct_type.py
-│   │   ├── 0003_silkproduct_description_silkproduct_owner_and_more.py
-│   │   └── init .py
-│   └── management/              # Custom management commands
-│       └── commands/
-├── templates/                   # HTML templates
-│   ├── base.html               # Base template
+├── manage.py                   # Django management script
+├── requirements.txt            # Python dependencies (Django, DRF, JWT)
+├── README.md                   # Comprehensive project documentation
+├── .gitignore                  # Git ignore configuration
+├── db.sqlite3                  # SQLite database (created after migrations)
+│
+├── silk_catalog/               # 🏗️ Main Django Project Configuration
+│   ├── __init__.py             # Python package marker
+│   ├── settings.py             # Django settings & configuration
+│   ├── urls.py                 # Main URL routing configuration
+│   ├── wsgi.py                 # WSGI deployment configuration
+│   └── asgi.py                 # ASGI deployment configuration
+│
+├── silk_products/              # 📦 Core Application Module
+│   ├── __init__.py             # Python package marker
+│   ├── admin.py                # Django admin interface setup
+│   ├── apps.py                 # Application configuration
+│   ├── models.py               # Database models (SilkProduct, UserProfile)
+│   ├── views.py                # Web view controllers
+│   ├── urls.py                 # Web URL patterns
+│   ├── forms.py                # Django form definitions
+│   ├── api_views.py            # REST API view controllers
+│   ├── api_urls.py             # API URL patterns
+│   ├── serializers.py          # DRF serializers for API
+│   ├── tests.py                # Unit and integration tests
+│   └── migrations/             # Database schema migrations
+│       ├── __init__.py
+│       ├── 0001_initial.py     # Initial database schema
+│       ├── 0002_alter_silkproduct_name_alter_silkproduct_type.py
+│       └── 0003_silkproduct_description_silkproduct_owner_and_more.py
+│
+├── templates/                  # 🎨 HTML Template Files
+│   ├── base.html               # Base template with common layout
 │   ├── registration/           # Authentication templates
-│   │   ├── login.html
-│   │   └── register.html
-│   └── silk_products/          # Product templates
-│       ├── product_list.html
-│       ├── product_detail.html
-│       ├── product_form.html
-│       └── product_confirm_delete.html
-└── static/                     # Static files
-└── css/
-└── style.css           # Custom styles
+│   │   ├── login.html          # User login form
+│   │   └── register.html       # User registration form
+│   └── silk_products/          # Product-specific templates
+│       ├── product_list.html   # Product listing page
+│       ├── product_detail.html # Product detail view
+│       ├── product_form.html   # Product create/edit form
+│       └── product_confirm_delete.html # Delete confirmation
+│
+└── static/                     # 🎨 Static Assets
+    └── css/
+        └── style.css           # Custom CSS styles
 ```
 
 ## Models
