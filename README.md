@@ -162,7 +162,7 @@ curl -X POST http://localhost:8000/api/products/ \
 
 ## Project Structure
 
-``'
+```
 Rajshahi-Silk-Products-Management-Web-Application/
 ├── manage.py
 ├── requirements.txt
@@ -207,7 +207,7 @@ Rajshahi-Silk-Products-Management-Web-Application/
 └── static/                     # Static files
 └── css/
 └── style.css           # Custom styles
-
+```
 
 ## Models
 
